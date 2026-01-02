@@ -1,0 +1,7 @@
+<!-- Simple example SVG logo -->
+<svg width="120" height="40" xmlns="http://www.w3.org/2000/svg">
+  <rect width="120" height="40" rx="5" fill="#4F46E5"/>
+  <text x="60" y="25" font-family="Arial" font-size="18" fill="white" text-anchor="middle" font-weight="bold">
+    BONCHI
+  </text>
+</svg>

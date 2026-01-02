@@ -1,0 +1,29 @@
+# Keep this directory for storing actual asset files
+
+Place your assets in appropriate subdirectories:
+
+```
+files/
+├── images/
+│   ├── logo.png
+│   ├── banner.jpg
+│   └── background.webp
+├── icons/
+│   ├── home.svg
+│   ├── user.svg
+│   └── settings.svg
+├── fonts/
+│   ├── custom-font.woff2
+│   └── custom-font.woff
+├── styles/
+│   ├── global.css
+│   └── theme.css
+├── videos/
+│   └── intro.mp4
+├── audio/
+│   └── notification.mp3
+└── documents/
+    └── terms.pdf
+```
+
+Then export them in ../index.ts

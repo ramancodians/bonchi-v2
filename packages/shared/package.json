@@ -1,0 +1,35 @@
+{
+  "name": "@bonchi/shared",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./assets": {
+      "import": "./dist/assets/index.js",
+      "require": "./dist/assets/index.js",
+      "types": "./dist/assets/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.90.12",
+    "axios": "^1.13.2",
+    "dotenv": "^17.2.3",
+    "react": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "@types/react": "^19.2.5",
+    "typescript": "^5.3.3"
+  }
+}
