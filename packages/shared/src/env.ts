@@ -15,7 +15,6 @@ if (!isBrowser) {
 const getEnv = (key: string, defaultValue: string = ''): string => {
   if (isBrowser) {
     // In browser (Vite), use import.meta.env
-    // @ts-expect-error - import.meta.env is only available in Vite
     return (import.meta?.env?.[key] as string) || defaultValue;
   } else {
     // In Node.js (server), use process.env (loaded by dotenv above)
