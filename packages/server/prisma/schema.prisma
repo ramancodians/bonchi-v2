@@ -1,0 +1,72 @@
+// prisma/schema.prisma
+// Define your database models
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum AuthType {
+  EMAIL_PASSWORD
+  SMS_OTP
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+  PREFER_NOT_TO_SAY
+}
+
+enum USER_TYPES {
+  SUPER_ADMIN
+  CUSTOMER
+  HEALTH_CARE_PROVIDER
+  BONCHI_MITRA
+  AMBULANCE_SERVICE
+}
+
+enum AGENT_TYPE {
+  LOCAL
+  DISTRICT
+  STATE
+}
+
+model User {
+  id          Int          @id @default(autoincrement())
+  email       String?      @unique
+  phone       String?      @unique
+  password    String?
+  firstName   String?
+  middleName  String?
+  name        String? // Full name for backward compatibility
+  address     String?
+  district    String?
+  state       String?
+  gstNumber   String?
+  gender      Gender?
+  age         Int?
+  authType    AuthType
+  isVerified  Boolean      @default(false)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  userType    USER_TYPES   @default(CUSTOMER)
+  agentType   AGENT_TYPE?
+  otpSessions OtpSession[]
+}
+
+model OtpSession {
+  id        Int      @id @default(autoincrement())
+  phone     String
+  otp       String
+  expiresAt DateTime
+  verified  Boolean  @default(false)
+  attempts  Int      @default(0)
+  userId    Int?
+  user      User?    @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+}
