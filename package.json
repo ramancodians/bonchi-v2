@@ -3,10 +3,12 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
+    "build:client": "tsx scripts/build-client.ts",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prod": "npm run check-node && npm run build && npm run pm2:prod",
+    "prod": "npm run build && npm run build:client && cd packages/server && npm run start:prod",
+    "check-node": "node scripts/check-node-version.js",
     "pm2:dev": "pm2 start ecosystem.config.cjs --only bonchi-server-dev,bonchi-web-dev",
     "pm2:prod": "npm run build && pm2 start ecosystem.config.cjs --only bonchi-server,bonchi-web-preview",
     "pm2:all": "pm2 start ecosystem.config.cjs",
@@ -19,6 +21,7 @@
   },
   "devDependencies": {
     "prettier": "^3.1.1",
+    "tsx": "^4.7.0",
     "turbo": "^1.11.0",
     "typescript": "^5.3.3"
   },
