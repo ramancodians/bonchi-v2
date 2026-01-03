@@ -73,6 +73,36 @@ export const lengthRangeValidation = (
 });
 
 /**
+ * Validation rule for custom pattern
+ */
+export const patternValidation = (pattern: RegExp, message: string) => ({
+  pattern: {
+    value: pattern,
+    message,
+  },
+});
+
+/**
+ * Validation rule for minimum value (numbers)
+ */
+export const minValidation = (min: number, message?: string) => ({
+  min: {
+    value: min,
+    message: message || `Minimum value is ${min}`,
+  },
+});
+
+/**
+ * Validation rule for maximum value (numbers)
+ */
+export const maxValidation = (max: number, message?: string) => ({
+  max: {
+    value: max,
+    message: message || `Maximum value is ${max}`,
+  },
+});
+
+/**
  * Combined validation builder
  */
 export const combineValidations = (

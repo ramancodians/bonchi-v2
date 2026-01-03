@@ -1,5 +1,6 @@
 import React from 'react';
-import { FormProvider, useForm, FieldErrors } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
+import type { FieldErrors } from 'react-hook-form';
 import {
   FormInput,
   FormTextarea,
