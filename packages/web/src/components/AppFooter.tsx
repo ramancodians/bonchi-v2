@@ -16,7 +16,9 @@ const AppFooter: React.FC = () => {
   ];
 
   const changeLanguage = (languageCode: string) => {
-    setLanguage(languageCode as 'en' | 'hi' | 'ta' | 'te' | 'bn' | 'mr' | 'gu' | 'kn');
+    setLanguage(
+      languageCode as 'en' | 'hi' | 'ta' | 'te' | 'bn' | 'mr' | 'gu' | 'kn'
+    );
   };
 
   return (
