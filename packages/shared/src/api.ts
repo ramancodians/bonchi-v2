@@ -1,4 +1,4 @@
-import { apiClient } from './axiosConfig';
+import type { AxiosInstance } from 'axios';
 import type {
   PackagesResponse,
   AuthResponse,
@@ -8,6 +8,17 @@ import type {
   VerifyOTPRequest,
   User,
 } from './types';
+
+// Global apiClient reference - must be set before using API functions
+let apiClient: AxiosInstance;
+
+/**
+ * Initialize the API module with an axios instance
+ * Must be called before using any API functions
+ */
+export const initializeApi = (axiosInstance: AxiosInstance) => {
+  apiClient = axiosInstance;
+};
 
 // Packages API
 export const packagesApi = {

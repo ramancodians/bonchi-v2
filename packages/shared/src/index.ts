@@ -1,5 +1,3 @@
-export * from './env';
-export * from './axiosConfig';
 export * from './types';
 export * from './api';
 export * from './hooks';

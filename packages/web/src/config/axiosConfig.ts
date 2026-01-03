@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { env } from './env';
 
 export const apiClient = axios.create({
-  baseURL: env.API_URL,
+  baseURL: import.meta.env.VITE_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -12,7 +11,7 @@ export const apiClient = axios.create({
 // Request interceptor
 apiClient.interceptors.request.use(
   (config) => {
-    // You can add auth tokens here
+    // Auth tokens are set via authUtils.setAuthData()
     return config;
   },
   (error) => {

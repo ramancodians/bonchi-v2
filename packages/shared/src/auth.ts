@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { apiClient } from './axiosConfig';
+import type { AxiosInstance } from 'axios';
 import {
   AuthResponse,
   LoginEmailRequest,
@@ -8,6 +8,22 @@ import {
   RegisterEmailRequest,
   User,
 } from './types';
+
+// Global apiClient reference - must be set before using auth utilities
+let apiClient: AxiosInstance;
+
+/**
+ * Initialize the auth module with an axios instance
+ * Must be called before using any auth functions
+ */
+export const initializeAuth = (axiosInstance: AxiosInstance) => {
+  apiClient = axiosInstance;
+  // Initialize auth state from storage
+  const token = authUtils.getToken();
+  if (token) {
+    apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  }
+};
 
 // Auth API endpoints
 const AUTH_ENDPOINTS = {
@@ -119,17 +135,6 @@ export const authUtils = {
    */
   isAuthenticated(): boolean {
     return !!this.getToken();
-  },
-
-  /**
-   * Initialize auth - set token in axios if available
-   */
-  initializeAuth() {
-    if (!isBrowser) return;
-    const token = this.getToken();
-    if (token) {
-      apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    }
   },
 };
 
@@ -373,6 +378,3 @@ export const useAuth = () => {
     loading,
   };
 };
-
-// Initialize auth on module load
-authUtils.initializeAuth();

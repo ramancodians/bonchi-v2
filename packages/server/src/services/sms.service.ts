@@ -22,6 +22,8 @@ class SMSService {
   private endpoint: string;
 
   constructor() {
+    console.log('Initializing SMSService with Fast2SMS');
+    console.log('Fast2SMS Endpoint:', env);
     this.apiKey = env.FAST2SMS_API_KEY;
     this.endpoint = env.FAST2SMS_ENDPOINT;
 
