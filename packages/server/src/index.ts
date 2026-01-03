@@ -1,18 +1,11 @@
 import express, { Request, Response } from 'express';
-import { PrismaClient } from './../generated/prisma/client';
-import { withAccelerate } from '@prisma/extension-accelerate';
-
-import authRoutes from './routes/auth.routes';
+import 'dotenv/config';
+import prisma from './prisma';
 
 const app = express();
 const PORT = process.env.API_PORT;
 
 // Initialize Prisma Client
-// @ts-ingore
-export const prisma = new PrismaClient({
-  accelerateUrl: process.env.DATABASE_URL,
-  log: ['query', 'info', 'warn', 'error'],
-}).$extends(withAccelerate());
 
 app.use(express.json());
 app.use((req, res, next) => {
@@ -21,8 +14,11 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
 });
-// Auth routes
-app.use('/api/auth', authRoutes);
+
+// Health check endpoint
+app.get('/health', (req: Request, res: Response) => {
+  res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
+});
 
 // Start server with async initialization
 async function startServer() {

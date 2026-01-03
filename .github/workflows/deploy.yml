@@ -1,0 +1,85 @@
+name: Deploy to Production
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
+      tag:
+        description: 'Docker image tag to deploy (leave empty for latest)'
+        required: false
+        default: 'latest'
+
+jobs:
+  deploy:
+    name: Deploy Application
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to server
+        run: |
+          echo "🚀 Deploying Bonchi V2 to ${{ inputs.environment }}"
+          echo "Using image tag: ${{ inputs.tag }}"
+          echo ""
+          echo "Deployment steps:"
+          echo "1. SSH into your server"
+          echo "2. Pull latest images:"
+          echo "   docker pull ghcr.io/ramancodians/bonchi-v2-server:${{ inputs.tag }}"
+          echo "   docker pull ghcr.io/ramancodians/bonchi-v2-web:${{ inputs.tag }}"
+          echo "3. Update docker-compose.prod.yml if needed"
+          echo "4. Run: docker-compose -f docker-compose.prod.yml up -d"
+          echo "5. Run migrations: docker-compose exec server npm run prisma:migrate"
+          echo ""
+          echo "📦 Images available at:"
+          echo "   Server: ghcr.io/ramancodians/bonchi-v2-server:${{ inputs.tag }}"
+          echo "   Web: ghcr.io/ramancodians/bonchi-v2-web:${{ inputs.tag }}"
+
+      - name: Deployment summary
+        run: |
+          echo "## 🎉 Deployment Triggered" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Environment:** ${{ inputs.environment }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Image Tag:** ${{ inputs.tag }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Server Deployment Commands" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
+          echo "# SSH into your server and run:" >> $GITHUB_STEP_SUMMARY
+          echo "cd /path/to/bonchi_v2" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "# Pull latest images" >> $GITHUB_STEP_SUMMARY
+          echo "docker pull ghcr.io/ramancodians/bonchi-v2-server:${{ inputs.tag }}" >> $GITHUB_STEP_SUMMARY
+          echo "docker pull ghcr.io/ramancodians/bonchi-v2-web:${{ inputs.tag }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "# Deploy with docker-compose" >> $GITHUB_STEP_SUMMARY
+          echo "docker-compose -f docker-compose.prod.yml pull" >> $GITHUB_STEP_SUMMARY
+          echo "docker-compose -f docker-compose.prod.yml up -d" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "# Run database migrations" >> $GITHUB_STEP_SUMMARY
+          echo "docker-compose exec server npm run prisma:migrate" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+
+# Uncomment and configure when you have a deployment server
+# 
+#     - name: Deploy via SSH
+#       uses: appleboy/ssh-action@v1.0.0
+#       with:
+#         host: ${{ secrets.DEPLOY_HOST }}
+#         username: ${{ secrets.DEPLOY_USER }}
+#         key: ${{ secrets.DEPLOY_SSH_KEY }}
+#         script: |
+#           cd /path/to/bonchi_v2
+#           docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+#           docker pull ghcr.io/ramancodians/bonchi-v2-server:${{ inputs.tag }}
+#           docker pull ghcr.io/ramancodians/bonchi-v2-web:${{ inputs.tag }}
+#           docker-compose -f docker-compose.prod.yml up -d
+#           docker-compose exec server npm run prisma:migrate
