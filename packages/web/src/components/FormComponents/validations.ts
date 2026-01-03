@@ -76,7 +76,7 @@ export const lengthRangeValidation = (
  * Combined validation builder
  */
 export const combineValidations = (
-  ...validations: Array<Record<string, any>>
+  ...validations: Array<Record<string, unknown>>
 ) => {
   return validations.reduce((acc, curr) => ({ ...acc, ...curr }), {});
 };

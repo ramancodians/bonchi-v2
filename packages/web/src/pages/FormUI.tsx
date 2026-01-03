@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm, FieldErrors } from 'react-hook-form';
 import {
   FormInput,
   FormTextarea,
@@ -46,7 +46,7 @@ const FormUIDemo: React.FC = () => {
     alert('Form submitted successfully! Check console for data.');
   };
 
-  const onError = (errors: any) => {
+  const onError = (errors: FieldErrors) => {
     console.error('Form Errors:', errors);
   };
 
@@ -278,9 +278,9 @@ const FormUIDemo: React.FC = () => {
                   <h3 className="font-bold">Validation Errors:</h3>
                   <div className="text-xs">
                     {Object.entries(methods.formState.errors).map(
-                      ([key, error]: [string, any]) => (
+                      ([key, error]) => (
                         <div key={key}>
-                          <strong>{key}:</strong> {error.message}
+                          <strong>{key}:</strong> {error?.message}
                         </div>
                       )
                     )}
