@@ -21,7 +21,7 @@ jobs:
     name: Deploy Application
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -69,7 +69,7 @@ jobs:
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
 
 # Uncomment and configure when you have a deployment server
-# 
+#
 #     - name: Deploy via SSH
 #       uses: appleboy/ssh-action@v1.0.0
 #       with:

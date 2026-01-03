@@ -117,7 +117,7 @@ jobs:
     needs: [build-server, build-web]
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
-    
+
     steps:
       - name: Create deployment summary
         run: |
