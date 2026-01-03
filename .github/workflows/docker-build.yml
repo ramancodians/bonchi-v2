@@ -63,6 +63,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           platforms: linux/amd64
+          build-args: |
+            BUILD_DATABASE_URL=${{ vars.CI_DATABASE_URL || 'postgresql://dummy:dummy@localhost:5432/dummy?schema=public' }}
 
   build-web:
     name: Build Web Image
@@ -110,7 +112,7 @@ jobs:
           cache-to: type=gha,mode=max
           platforms: linux/amd64
           build-args: |
-            VITE_API_URL=${{ secrets.VITE_API_URL || 'http://localhost:4001' }}
+            VITE_API_URL=${{ vars.VITE_API_URL || 'http://localhost:4001' }}
 
   deploy-summary:
     name: Deployment Summary

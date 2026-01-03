@@ -3,6 +3,9 @@ FROM node:22-alpine AS base
 # Build stage
 FROM base AS builder
 
+# Accept build argument for DATABASE_URL
+ARG BUILD_DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy?schema=public"
+
 WORKDIR /app
 
 # Copy root package files
@@ -25,7 +28,8 @@ RUN npm ci
 # Build shared first
 RUN npm run build --workspace=@bonchi/shared
 
-# Generate Prisma Client
+# Generate Prisma Client (uses build arg for DATABASE_URL)
+ENV DATABASE_URL=$BUILD_DATABASE_URL
 RUN npm run prisma:generate --workspace=@bonchi/server
 
 # Build server

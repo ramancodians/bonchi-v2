@@ -75,7 +75,7 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           script: |
-            cd /path/to/bonchi_v2
+            cd ${{ vars.DEPLOY_PATH || '/home/ubuntu/bonchi_v2' }}
             docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
             docker pull ghcr.io/ramancodians/bonchi-v2-server:${{ inputs.tag }}
             docker pull ghcr.io/ramancodians/bonchi-v2-web:${{ inputs.tag }}

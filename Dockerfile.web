@@ -3,6 +3,9 @@ FROM node:22-alpine AS base
 # Build stage
 FROM base AS builder
 
+# Accept build argument for VITE_API_URL
+ARG VITE_API_URL="http://localhost:4001"
+
 WORKDIR /app
 
 # Copy root package files
@@ -32,6 +35,7 @@ RUN npm run build --workspace=@bonchi/shared
 # Build web (creates production bundle) - skip ESLint
 ENV ESLINT_NO_DEV_ERRORS=true
 ENV DISABLE_ESLINT_PLUGIN=true
+ENV VITE_API_URL=$VITE_API_URL
 RUN npm run build --workspace=@bonchi/web
 
 # Production stage with nginx
