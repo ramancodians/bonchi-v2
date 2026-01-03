@@ -1,4 +1,4 @@
-import { PrismaClient, AuthType } from '@prisma/client';
+import { AuthType } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import smsService from './sms.service.js';
