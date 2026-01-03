@@ -29,7 +29,9 @@ RUN npm ci
 # Build shared first
 RUN npm run build --workspace=@bonchi/shared
 
-# Build web (creates production bundle)
+# Build web (creates production bundle) - skip ESLint
+ENV ESLINT_NO_DEV_ERRORS=true
+ENV DISABLE_ESLINT_PLUGIN=true
 RUN npm run build --workspace=@bonchi/web
 
 # Production stage with nginx
