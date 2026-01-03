@@ -57,8 +57,7 @@ COPY --from=builder /app/packages/server/dist ./packages/server/dist
 COPY --from=builder /app/packages/server/prisma ./packages/server/prisma
 COPY --from=builder /app/packages/server/generated ./packages/server/generated
 
-# Copy node_modules with generated Prisma Client
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+# Copy Prisma dependencies from node_modules
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 
 WORKDIR /app/packages/server
