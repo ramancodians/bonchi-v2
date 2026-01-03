@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type ReactNode } from 'react';
 import {
   useFormContext,
   type RegisterOptions,
@@ -10,7 +10,7 @@ interface FormCheckboxProps extends Omit<
   'type'
 > {
   name: string;
-  label: string;
+  label: string | ReactNode;
   validation?: RegisterOptions<FieldValues, string>;
   helpText?: string;
   containerClassName?: string;

@@ -2,10 +2,9 @@ import { PrismaClient, AuthType } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import smsService from './sms.service.js';
-import { env } from '@bonchi/shared';
 import { prisma } from '../index.js';
 
-const JWT_SECRET = env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET;
 const OTP_EXPIRY_MINUTES = 10;
 
 interface AuthResult {

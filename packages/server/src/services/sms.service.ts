@@ -1,4 +1,3 @@
-import { env } from '@bonchi/shared';
 interface SendSMSParams {
   numbers: string | string[]; // Phone numbers to send SMS to (comma-separated or array)
   message?: string; // Message text (for Quick SMS)
@@ -23,9 +22,8 @@ class SMSService {
 
   constructor() {
     console.log('Initializing SMSService with Fast2SMS');
-    console.log('Fast2SMS Endpoint:', env);
-    this.apiKey = env.FAST2SMS_API_KEY;
-    this.endpoint = env.FAST2SMS_ENDPOINT;
+    this.apiKey = process.env.FAST2SMS_API_KEY || '';
+    this.endpoint = process.env.FAST2SMS_ENDPOINT || '';
 
     if (!this.apiKey) {
       throw new Error(

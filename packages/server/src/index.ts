@@ -2,15 +2,15 @@ import express, { Request, Response } from 'express';
 import { PrismaClient } from './../generated/prisma/client';
 import { withAccelerate } from '@prisma/extension-accelerate';
 
-import { env } from '@bonchi/shared';
 import authRoutes from './routes/auth.routes';
 
 const app = express();
-const PORT = env.API_PORT;
+const PORT = process.env.API_PORT;
 
 // Initialize Prisma Client
+// @ts-ingore
 export const prisma = new PrismaClient({
-  accelerateUrl: env.DATABASE_URL,
+  accelerateUrl: process.env.DATABASE_URL,
   log: ['query', 'info', 'warn', 'error'],
 }).$extends(withAccelerate());
 
@@ -35,7 +35,7 @@ async function startServer() {
     app.listen(PORT, () => {
       console.log(`🚀 Server running on http://localhost:${PORT}`);
       console.log(`⚡ Powered by Bun + Express`);
-      console.log(`📦 Environment: ${env.NODE_ENV}`);
+      console.log(`📦 Environment: ${process.env.NODE_ENV}`);
     });
   } catch (error) {
     console.error('❌ Failed to start server:', error);
