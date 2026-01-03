@@ -68,18 +68,16 @@ jobs:
           echo "docker-compose exec server npm run prisma:migrate" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
 
-# Uncomment and configure when you have a deployment server
-#
-#     - name: Deploy via SSH
-#       uses: appleboy/ssh-action@v1.0.0
-#       with:
-#         host: ${{ secrets.DEPLOY_HOST }}
-#         username: ${{ secrets.DEPLOY_USER }}
-#         key: ${{ secrets.DEPLOY_SSH_KEY }}
-#         script: |
-#           cd /path/to/bonchi_v2
-#           docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
-#           docker pull ghcr.io/ramancodians/bonchi-v2-server:${{ inputs.tag }}
-#           docker pull ghcr.io/ramancodians/bonchi-v2-web:${{ inputs.tag }}
-#           docker-compose -f docker-compose.prod.yml up -d
-#           docker-compose exec server npm run prisma:migrate
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script: |
+            cd /path/to/bonchi_v2
+            docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+            docker pull ghcr.io/ramancodians/bonchi-v2-server:${{ inputs.tag }}
+            docker pull ghcr.io/ramancodians/bonchi-v2-web:${{ inputs.tag }}
+            docker-compose -f docker-compose.prod.yml up -d
+            docker-compose exec -T server npm run prisma:migrate
